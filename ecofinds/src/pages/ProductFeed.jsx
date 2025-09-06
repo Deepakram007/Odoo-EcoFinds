@@ -23,7 +23,7 @@ export default function ProductFeed(){
           <p className="text-sm text-gold ">Sustainable second-hand shopping</p>
         </div>
         <div className="flex gap-2 items-center">
-          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search by title..." className="border rounded-lg px-3 py-2" />
+          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search by title..." className="border rounded-lg px-3 py-2 bg-black placeholder-gold" />
           <select value={cat} onChange={e=>setCat(e.target.value)} className="border rounded-lg px-3 py-2 text-gold placeholder-gold bg-black">
             {categories.map(c=> <option key={c} value={c}>{c}</option>)}
           </select>
@@ -31,7 +31,7 @@ export default function ProductFeed(){
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filtered.length === 0 ? <div className="text-gray-500">No products found.</div> : filtered.map(p=> <ProductCard key={p.id} product={p} />)}
+        {filtered.length === 0 ? <div className="text-gold">No products found.</div> : filtered.map(p=> <ProductCard key={p.id} product={p} />)}
       </div>
     </div>
   );
