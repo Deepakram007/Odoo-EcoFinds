@@ -22,8 +22,8 @@ export default function Login(){
         <h1 className="text-2xl font-bold text-gold text-center mb-4">Welcome back to EcoFinds</h1>
         <form onSubmit={submit} className="space-y-4">
           {err && <div className="text-red-500">{err}</div>}
-          <input className="w-full border px-4 py-2 rounded-lg placeholder-gold bg-black" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required />
-          <input type="password" className="w-full border px-4 placeholder-gold py-2 rounded-lg bg-black" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} required />
+          <input className="w-full border px-4 py-2 rounded-lg placeholder-gold bg-black text-gold" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required />
+          <input type="password" className="w-full border px-4 placeholder-gold py-2 rounded-lg bg-black text-gold" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} required />
           <button className="w-full btn ">Login</button>
         </form>
         <p className="text-sm mt-4 text-center text-gold">Don't have an account? <Link to="/signup" className="text-green-600">Sign up</Link></p>
