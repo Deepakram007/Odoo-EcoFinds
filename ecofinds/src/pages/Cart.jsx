@@ -30,15 +30,15 @@ export default function Cart(){
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Cart</h2>
-      {items.length === 0 ? <div className="text-gray-500">Cart is empty.</div> : (
+      <h2 className="text-xl text-gold-700 font-semibold mb-4">Cart</h2>
+      {items.length === 0 ? <div className="text-gold">Cart is empty.</div> : (
         <div className="space-y-4">
           {items.map(i=>(
             <div key={i.id} className="card flex items-center gap-4">
               <img src={i.image || 'https://via.placeholder.com/200x120'} className="w-32 h-20 object-cover rounded-md" alt={i.title} />
               <div className="flex-1">
                 <div className="font-semibold">{i.title}</div>
-                <div className="text-sm text-gray-600">₹{i.price}</div>
+                <div className="text-sm text-gra">₹{i.price}</div>
               </div>
               <div className="flex flex-col gap-2 items-end">
                 <button onClick={()=>doRemove(i.id)} className="text-red-500">Remove</button>
@@ -46,7 +46,7 @@ export default function Cart(){
             </div>
           ))}
           <div className="flex items-center justify-between mt-4">
-            <div className="text-lg font-bold">Total: ₹{total}</div>
+            <div className="text-lg font-bold text-gold">Total: ₹{total}</div>
             <div className="flex gap-2">
               <button onClick={checkout} className="btn">Checkout</button>
             </div>
