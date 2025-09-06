@@ -16,11 +16,11 @@ export default function Dashboard(){
 
   return (
     <div className="card max-w-2xl mx-auto">
-      <h2 className="text-xl font-semibold mb-4">My Dashboard</h2>
+      <h2 className="text-xl text-gold font-semibold mb-4">My Dashboard</h2>
       {msg && <div className="text-sm text-green-600 mb-2">{msg}</div>}
       <form onSubmit={save} className="space-y-4">
-        <input className="w-full border px-4 py-2 rounded-lg" placeholder="Username" value={username} onChange={e=>setUsername(e.target.value)} />
-        <input className="w-full border px-4 py-2 rounded-lg" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required />
+        <input className="w-full text-gold bg-black border px-4 py-2 rounded-lg" placeholder="Username" value={username} onChange={e=>setUsername(e.target.value)} />
+        <input className="w-full text-gold bg-black border px-4 py-2 rounded-lg" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required />
         <div className="flex justify-end">
           <button className="btn" type="submit">Save</button>
         </div>
