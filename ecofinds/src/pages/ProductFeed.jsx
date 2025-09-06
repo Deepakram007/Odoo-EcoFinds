@@ -20,11 +20,11 @@ export default function ProductFeed(){
       <header className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-green-700">EcoFinds Marketplace</h1>
-          <p className="text-sm text-gray-600">Sustainable second-hand shopping</p>
+          <p className="text-sm text-gold ">Sustainable second-hand shopping</p>
         </div>
         <div className="flex gap-2 items-center">
           <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search by title..." className="border rounded-lg px-3 py-2" />
-          <select value={cat} onChange={e=>setCat(e.target.value)} className="border rounded-lg px-3 py-2">
+          <select value={cat} onChange={e=>setCat(e.target.value)} className="border rounded-lg px-3 py-2 text-gold placeholder-gold bg-black">
             {categories.map(c=> <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
