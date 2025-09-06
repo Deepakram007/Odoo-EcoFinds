@@ -1,41 +1,67 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function Signup(){
-  const { signup } = useAuth();
-  const nav = useNavigate();
-  const [email, setEmail] = useState("");
+export default function Signup() {
+  const { register } = useAuth();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [err, setErr] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [msg, setMsg] = useState("");
 
-  const submit = (e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(password !== confirmPassword) {
-      setErr("Passwords do not match");
-      return;
+    const res = register({ username, email, password });
+    if (res.success) {
+      navigate("/dashboard");
+    } else {
+      setMsg(res.message || "Signup failed");
     }
-    const r = signup({ email: email.trim(), username: username.trim(), password });
-    if(r.success) nav("/");
-    else setErr(r.message);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-white">
-      <div className="w-full max-w-md p-8 card">
-        <h1 className="text-2xl font-bold text-green-700 text-center mb-4">Create account</h1>
-        <form onSubmit={submit} className="space-y-4">
-          {err && <div className="text-red-500">{err}</div>}
-          <input className="w-full border px-4 py-2 rounded-lg" placeholder="Username" value={username} onChange={e=>setUsername(e.target.value)} />
-          <input className="w-full border px-4 py-2 rounded-lg" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required />
-          <input type="password" className="w-full border px-4 py-2 rounded-lg" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} required />
-          <input type="password" className="w-full border px-4 py-2 rounded-lg" placeholder="Confirm Password" value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} required />
-          <button className="w-full btn">Sign up</button>
-        </form>
-        <p className="text-sm mt-4 text-center">Already have an account? <Link to="/login" className="text-green-600">Login</Link></p>
-      </div>
+    <div className="max-w-md mx-auto bg-black border border-gold rounded-2xl p-6 shadow-lg">
+      <h2 className="text-2xl font-bold text-gold mb-4">Signup</h2>
+      {msg && <div className="text-red-500 text-sm mb-2">{msg}</div>}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          placeholder="Username"
+          className="w-full bg-black border border-gold text-gold px-4 py-2 rounded-lg"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full bg-black border border-gold text-gold px-4 py-2 rounded-lg"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full bg-black border border-gold text-gold px-4 py-2 rounded-lg"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button
+          type="submit"
+          className="w-full bg-gold text-black font-semibold py-2 rounded-lg hover:bg-yellow-600"
+        >
+          Signup
+        </button>
+      </form>
+      <p className="text-sm text-gray-400 mt-4">
+        Already have an account?{" "}
+        <Link to="/login" className="text-gold hover:underline">
+          Login
+        </Link>
+      </p>
     </div>
   );
 }

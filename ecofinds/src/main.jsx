@@ -1,22 +1,13 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom/client";
 import App from "./App";
-import "./index.css";
 import { AuthProvider } from "./context/AuthContext";
-import { ProductProvider } from "./context/ProductContext";
-import { CartProvider } from "./context/CartContext";
+import "./index.css"; // TailwindCSS or global styles
 
-createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <ProductProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </ProductProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );

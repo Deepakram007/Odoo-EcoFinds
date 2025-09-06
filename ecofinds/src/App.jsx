@@ -1,41 +1,46 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import ProductFeed from "./pages/ProductFeed";
-import AddProduct from "./pages/AddProduct";
-import MyListings from "./pages/MyListings";
-import ProductDetail from "./pages/ProductDetail";
-import Dashboard from "./pages/Dashboard";
-import Cart from "./pages/Cart";
-import PreviousPurchases from "./pages/PreviousPurchases";
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
-function Protected({ children }) {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
-  return children;
-}
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
-export default function App(){
+export default function App() {
+  const { user, logout } = useAuth();
+
   return (
-    <div>
-      <Navbar />
-      <main className="container">
-        <Routes>
-          <Route path="/" element={<ProductFeed />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
-          <Route path="/add-product" element={<Protected><AddProduct /></Protected>} />
-          <Route path="/my-listings" element={<Protected><MyListings /></Protected>} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Protected><Cart /></Protected>} />
-          <Route path="/purchases" element={<Protected><PreviousPurchases /></Protected>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-    </div>
+    <Router>
+      <div className="min-h-screen bg-black text-gold flex flex-col">
+        {/* Navbar */}
+        <header className="bg-black border-b border-gold p-4 flex justify-between items-center">
+          <Link to="/" className="text-xl font-bold">EcoFinds</Link>
+          <nav className="space-x-4">
+            {user ? (
+              <>
+                <Link to="/dashboard" className="hover:text-white">Dashboard</Link>
+                <button onClick={logout} className="hover:text-white">Logout</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="hover:text-white">Login</Link>
+                <Link to="/signup" className="hover:text-white">Signup</Link>
+              </>
+            )}
+          </nav>
+        </header>
+
+        {/* Main content */}
+        <main className="flex-grow p-6">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
+            <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/dashboard" />} />
+            <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
