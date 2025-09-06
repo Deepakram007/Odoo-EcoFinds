@@ -1,40 +1,112 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function Signup(){
-  const { signup } = useAuth();
-  const nav = useNavigate();
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [err, setErr] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+export default function Signup() {
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
-  const submit = (e)=>{
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(password !== confirmPassword) {
-      setErr("Passwords do not match");
+
+    if (formData.password !== formData.confirmPassword) {
+      setMsg("Passwords do not match");
       return;
     }
-    const r = signup({ email: email.trim(), username: username.trim(), password });
-    if(r.success) nav("/");
-    else setErr(r.message);
+
+    try {
+      setLoading(true);
+      const res = await register({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (res.success) {
+        navigate("/dashboard");
+      } else {
+        setMsg(res.message || "Signup failed");
+      }
+    } catch (error) {
+      setMsg("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black from-green-50 to-white">
-      <div className="w-full max-w-md p-8 card">
-        <h1 className="text-2xl font-bold text-green-700 text-center mb-4 text-gold">Create account</h1>
-        <form onSubmit={submit} className="space-y-4">
-          {err && <div className="text-red-500">{err}</div>}
-          <input className="w-full border px-4 py-2 rounded-lg text-gold placeholder-gold bg-black" placeholder="Username" value={username} onChange={e=>setUsername(e.target.value)} />
-          <input className="w-full border px-4 py-2 rounded-lg text-gold placeholder-gold bg-black" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required />
-          <input type="password" className="w-full border px-4 py-2 rounded-lg text-gold placeholder-gold bg-black" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} required />
-          <input type="password" className="w-full border px-4 py-2 rounded-lg text-gold placeholder-gold bg-black" placeholder="Confirm Password" value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} required />
-          <button className="w-full btn">Sign up</button>
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="max-w-md w-full bg-black border border-[#d4af37] rounded-2xl p-6 shadow-2xl">
+        <h2 className="text-2xl font-bold text-[#d4af37] mb-4">Create Account</h2>
+
+        {msg && <div className="text-red-500 text-sm mb-2">{msg}</div>}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {["username", "email", "password", "confirmPassword"].map((field) => (
+            <div key={field}>
+              <label
+                htmlFor={field}
+                className="block text-sm font-medium text-[#d4af37] mb-1"
+              >
+                {field === "confirmPassword"
+                  ? "Confirm Password"
+                  : field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              <input
+                type={
+                  field.includes("password") ? "password" : field === "email" ? "email" : "text"
+                }
+                id={field}
+                name={field}
+                placeholder={
+                  field === "confirmPassword"
+                    ? "Re-enter your password"
+                    : `Enter your ${field}`
+                }
+                className="w-full bg-black border border-[#d4af37] text-[#d4af37] placeholder-gray-400 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                value={formData[field]}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full ${
+              loading
+                ? "bg-gray-700 cursor-not-allowed"
+                : "bg-[#d4af37] hover:bg-[#c19a2d]"
+            } text-black font-semibold py-2 rounded-lg transition`}
+          >
+            {loading ? "Signing up..." : "Signup"}
+          </button>
         </form>
-        <p className="text-sm mt-4 text-center">Already have an account? <Link to="/login" className="text-green-600">Login</Link></p>
+
+        <p className="text-sm text-gray-400 mt-4 text-center">
+          Already have an account?{" "}
+          <Link to="/login" className="text-[#d4af37] hover:underline">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
