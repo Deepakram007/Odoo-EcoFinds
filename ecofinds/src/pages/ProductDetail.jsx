@@ -28,7 +28,7 @@ export default function ProductDetail(){
           <img src={product.image || 'https://via.placeholder.com/800x520'} className="rounded-xl w-full object-cover" alt={product.title} />
         </div>
         <div>
-          <h2 className="text-2xl font-bold">{product.title}</h2>
+          <h2 className="text-2xl text-gold font-bold">{product.title}</h2>
           <p className="text-green-700 font-bold mt-2">₹{product.price}</p>
           <p className="text-sm text-gray-600 mt-1">{product.category}</p>
           <p className="mt-4">{product.description}</p>
