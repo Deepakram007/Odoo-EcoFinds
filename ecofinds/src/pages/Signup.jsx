@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
+import { axiosInstance } from "../axios/axio.js";
+import { toast } from 'react-toastify';
 export default function Signup(){
-  const { signup } = useAuth();
+  // const { signup } = useAuth();
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -11,15 +12,25 @@ export default function Signup(){
   const [err, setErr] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const submit = (e)=>{
+  const submit = async (e)=>{
     e.preventDefault();
     if(password !== confirmPassword) {
       setErr("Passwords do not match");
       return;
     }
-    const r = signup({ email: email.trim(), username: username.trim(), password });
-    if(r.success) nav("/");
-    else setErr(r.message);
+    // const r = signup({ email: email.trim(), username: username.trim(), password });
+    const result = await axiosInstance.post('/user/signup',{email,username,password});
+    console.log(result.data.message);
+    const r = result.data.message;
+    if(r == 0){
+      setErr("Account Already Exists");
+    }else if (r == 1) {
+      toast.success("Account Created Successfully");
+    } else {
+      setErr("Error in Account Creation")
+    }
+    // if(r.success) nav("/");
+    // else setErr(r.message);
   };
 
   return (

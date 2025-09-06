@@ -6,8 +6,9 @@ import router from '../utilities/route/user.route.js';
 const app=express();
 
 app.use(cors());
-app.use('/user',router);
 app.use(express.json());
+
+app.use('/user',router);
 app.use((req,res)=>{
     res.status(200).json({message:"API is working"})
 })
