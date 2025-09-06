@@ -76,7 +76,7 @@ export const login = async (req, res) => {
 export const getGoatData = async (req, res) => {
     try {
     
-        const {rows} = await pool.query('SELECT * FROM goat');
+        const {rows} = await pool.query('SELECT * FROM products');
 
         
         if (rows.length === 0) {

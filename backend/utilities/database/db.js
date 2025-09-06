@@ -5,10 +5,10 @@ const { Pool } = pg;
 
 const pool = new Pool({
     host: 'localhost',
-    user: 'my_app_user',
-    password: '12345',
-    database: 'my_backend_db',
-    port: 5432
+    user: 'my_new_user',
+    password: 'YourSecurePassword123!',
+    database: 'my_new_database',
+    port: 5000
 });
 
 
