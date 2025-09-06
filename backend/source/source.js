@@ -5,9 +5,7 @@ import cors from 'cors';
 import router from '../utilities/route/user.route.js';
 const app=express();
 
-app.use(cors({
-  origin: "http://localhost:5173"
-}));
+app.use(cors());
 app.use('/user',router);
 app.use(express.json());
 app.use((req,res)=>{

@@ -1,50 +1,36 @@
 import pool from '../database/db.js'; 
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-
 
 export const signUp = async (req, res) => {
     try {
-        const { email, password } = req.body;
-
-       
-        const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+        const { username, email, password } = req.body; 
+        
+        const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         
         if (rows.length > 0) {
-            return res.status(400).json({
-                message: "Account Exists"
-            });
+            return res.status(400).json({ message: "Account Exists" });
         }
 
-        
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        
-        const [result] = await pool.query(
-            'INSERT INTO users (email, password) VALUES (?, ?)',
-            [email, hashedPassword]
+        const result = await pool.query(
+            'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id',
+            [username, email, hashedPassword]
         );
 
-     
-        if (result.affectedRows === 1) {
-            const newUser = { id: result.insertId, email: email };
+        if (result.rowCount === 1) {
+            const newUser = { id: result.rows[0].id, email: email, username: username };
             
-            const token = jwt.sign(
-                { id: newUser.id, email: newUser.email },
-                process.env.JWT_SECRET,
-                { expiresIn: process.env.JWT_EXPIRES_IN }
-            );
+            // JWT token creation is removed.
             
             return res.status(201).json({ 
                 message: "Account Creation Successful",
-                user: { id: newUser.id, email: newUser.email },
-                token
+                user: newUser
             });
+            
         } else {
-             return res.status(500).json({ 
-                message: "Failure in Creation"
-            });
+             return res.status(500).json({ message: "Failure in Creation" });
         }
 
     } catch (error) {
@@ -54,42 +40,32 @@ export const signUp = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+    console.log("Login function called");
     try {
-        const { email, password } = req.body;
-
-       
-        const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+        const { email, password } = {email:"ala@gmail.com",password:"ala12345"}; //req.body;
+        console.log(email,password);
+        
+        const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         
         if (rows.length === 0) {
-            return res.status(404).json({ 
-                message: "User not found"
-            });
+            return res.status(404).json({ message: "User not found" });
         }
 
         const user = rows[0];
-
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(400).json({
-                message: "Incorrect Password"
-            });
+            return res.status(400).json({ message: "Incorrect Password" });
         }
-
-     
-        const token = jwt.sign(
-            { id: user.id, email: user.email }, 
-            process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRES_IN }
-        );
+        
+        // JWT token creation is removed.
 
         res.status(200).json({
             message: "Login Successful",
-            user: { id: user.id, email: user.email },
-            token
+            user: { id: user.id, email: user.email, username: user.username }
         });
 
-    } catch (error) {
+    } catch (error){
         console.error("Login Error:", error);
         res.status(500).json({ message: "Server error during login." });
     }

@@ -5,6 +5,35 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  async function loginUser(username,email, password) {
+  try {
+    const response = await fetch('http://localhost:3000/user/signUp', {
+      // This is the line that makes it a POST request
+      method: 'POST',
+
+      // This header is required for POST requests with a body
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      // This is the data you are sending
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        password: password
+      })
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+  } catch (error) {
+    console.error('Failed to login:', error);
+  }
+}
+
+// Example of how you would call the function
+loginUser('test','test@example.com', 'Password123!');
 
   return (
     <>
@@ -28,6 +57,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      
     </>
   )
 }
