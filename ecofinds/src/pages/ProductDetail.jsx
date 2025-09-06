@@ -25,13 +25,13 @@ export default function ProductDetail(){
       <button onClick={()=>nav(-1)} className="text-sm text-gray-600 mb-4">← Back</button>
       <div className="grid md:grid-cols-2 gap-6">
         <div>
-          <img src={product.image || 'https://via.placeholder.com/800x520'} className="rounded-xl w-full object-cover" alt={product.title} />
+          <img src={product.image || 'img/'} className="rounded-xl w-full object-cover" alt={product.title} />
         </div>
         <div>
           <h2 className="text-2xl text-gold font-bold">{product.title}</h2>
           <p className="text-green-700 font-bold mt-2">₹{product.price}</p>
-          <p className="text-sm text-gray-600 mt-1">{product.category}</p>
-          <p className="mt-4">{product.description}</p>
+          <p className="text-sm text-gold mt-1">{product.category}</p>
+          <p className="mt-4 text-gold">{product.description}</p>
           <div className="mt-6 flex gap-3">
             <button onClick={addToCart} className="btn">Add to cart</button>
             <button onClick={()=>alert('Message seller flow (mock)')} className="btn-ghost">Message seller</button>
