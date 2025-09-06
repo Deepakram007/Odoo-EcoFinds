@@ -6,7 +6,7 @@ export const useProducts = () => useContext(ProductContext);
 function uid(){ return 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
 
 const seed = () => ( [
-  { id: uid(), title: "Vintage Backpack", description: "Gently used backpack", category: "Accessories", price: 1200, image: "", sellerId: "system" },
+  { id: uid(), title: "Vintage Backpack", description: "Gently used backpack", category: "Accessories", price: 1200, image: "https://i.pinimg.com/736x/7a/0d/04/7a0d0464e4339b2c9973b14d9ffd2427.jpg", sellerId: "system" },
   { id: uid(), title: "Paperback: The Alchemist", description: "Fair condition", category: "Books", price: 250, image: "", sellerId: "system" },
   { id: uid(), title: "Over-ear Headphones", description: "Good sound", category: "Electronics", price: 800, image: "", sellerId: "system" },
 ]);
