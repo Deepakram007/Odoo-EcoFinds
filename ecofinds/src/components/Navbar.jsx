@@ -18,7 +18,7 @@ export default function Navbar(){
         <div className="flex-1 flex justify-center">
           <div className="flex items-center gap-3">
             <Link to="/" className="text-sm text-gold-600 hover:text-green-600">Browse</Link>
-            {user && <Link to="/add-product" className="text-sm text-gold-600 hover:text-green-600">Add</Link>}
+            {user && <Link to="/add-product" className="text-sm text-gold-600 hover:text-green-600 active-red">Add</Link>}
             {user && <Link to="/my-listings" className="text-sm text-gold-600 hover:text-green-600">My Listings</Link>}
             {user && <Link to="/cart" className="text-sm text-gold-600 hover:text-green-600">Cart</Link>}
             {user && <Link to="/purchases" className="text-sm text-gold-600 hover:text-green-600">Purchases</Link>}
@@ -33,8 +33,8 @@ export default function Navbar(){
             </>
           ) : (
             <>
-              <Link to="/login" className="text-sm text-gold-700 font-medium ">Login</Link>
-              <Link to="/signup" className="text-sm text-gold-700 font-medium hover:">Sign up</Link>
+              <Link to="/login" className="text-sm text-gold-700 font-medium hover:green">Login</Link>
+              <Link to="/signup" className="text-sm text-gold-700 font-medium hover:green">Sign up</Link>
             </>
           )}
         </div>
