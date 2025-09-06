@@ -8,5 +8,5 @@ body { @apply bg-black text-gray-800; }
 .container { @apply bg-black max-w-5xl mx-auto px-4 py-6; }
 .card { @apply bg-black1-150 rounded-2xl shadow-lg p-6; }
 .btn { @apply bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition; }
-.btn-ghost { @apply bg-transparent border border-gray-200 text-gray-800 py-2 px-3 rounded-lg; }
+.btn-ghost { @apply bg-green-600  text-white py-2 px-3 rounded-lg; }
 .placeholder { @apply bg-gray-100 rounded-xl h-40 flex items-center justify-center text-gray-400 border-gray-200; }
