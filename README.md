@@ -1,1 +1,1 @@
-# Ohoo-EcoFinds
+# Odoo-EcoFinds
