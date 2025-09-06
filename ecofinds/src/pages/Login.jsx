@@ -19,7 +19,7 @@ export default function Login(){
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-white">
       <div className="w-full max-w-md p-8 card">
-        <h1 className="text-2xl font-bold text-green-700 text-center mb-4">Welcome back to EcoFinds</h1>
+        <h1 className="text-2xl font-bold text-gold text-center mb-4">Welcome back to EcoFinds</h1>
         <form onSubmit={submit} className="space-y-4">
           {err && <div className="text-red-500">{err}</div>}
           <input className="w-full border px-4 py-2 rounded-lg" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required />
