@@ -15,13 +15,13 @@ export default function PreviousPurchases(){
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Previous Purchases</h2>
-      {items.length === 0 ? <div className="text-gray-500">No purchases yet.</div> : (
+      <h2 className="text-xl text-gold font-semibold mb-4">Previous Purchases</h2>
+      {items.length === 0 ? <div className="text-gold">No purchases yet.</div> : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {items.map(i=>(
             <div key={i.id} className="card">
-              <img src={i.image || 'https://via.placeholder.com/400x260'} className="rounded-xl mb-3 h-40 w-full object-cover" alt={i.title} />
-              <h3 className="font-semibold">{i.title}</h3>
+              <img src={i.image || 'https://via.placeholder.com/400x260'} className="rounded-xl mb-3 h-40 w-full object-cover text-gold" alt={i.title} />
+              <h3 className="font-semibold text-gold">{i.title}</h3>
               <div className="text-green-700 font-bold mt-2">₹{i.price}</div>
             </div>
           ))}
